@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -35,6 +35,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
+  const router = useRouter();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -44,7 +45,7 @@ export function LoginForm() {
   });
 
   const onSubmit = async (values: LoginFormValues) => {
-    // console.log(values);
+    console.log(values);
     await authClient.signIn.email(
       {
         email: values.email,

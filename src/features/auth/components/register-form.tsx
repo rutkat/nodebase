@@ -1,9 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-// import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -25,22 +25,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
-import router from "next/router";
 
-const registerSchema = z
-  .object({
-    email: z.email("Please enter a valid email address"),
-    password: z.string().min(1, "Password is required"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+const registerSchema = z.object({
+  email: z.email("Please enter a valid email address"),
+  password: z.string().min(1, "Password is required"),
+  confirmPassword: z.string(),
+})
+.refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"]
+});
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export function RegisterForm() {
+  const router = useRouter();
+
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -49,6 +49,32 @@ export function RegisterForm() {
       confirmPassword: "",
     },
   });
+
+  const signInGithub = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+    }, {
+      onSuccess: () => {
+        router.push("/");
+      },
+      onError: () => {
+        toast.error("Something went wrong");
+      },
+    });
+  };
+
+  const signInGoogle = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    }, {
+      onSuccess: () => {
+        router.push("/");
+      },
+      onError: () => {
+        toast.error("Something went wrong");
+      },
+    });
+  };
 
   const onSubmit = async (values: RegisterFormValues) => {
     await authClient.signUp.email(
@@ -64,9 +90,9 @@ export function RegisterForm() {
         },
         onError: (ctx) => {
           toast.error(ctx.error.message);
-        },
-      },
-    );
+        }
+      }
+    )
   };
 
   const isPending = form.formState.isSubmitting;
@@ -75,8 +101,12 @@ export function RegisterForm() {
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle>Get Started!</CardTitle>
-          <CardDescription>Create your account</CardDescription>
+          <CardTitle>
+            Get Started
+          </CardTitle>
+          <CardDescription>
+            Create your account to get started
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -84,6 +114,7 @@ export function RegisterForm() {
               <div className="grid gap-6">
                 <div className="flex flex-col gap-4">
                   <Button
+                    onClick={signInGithub}
                     variant="outline"
                     className="w-full"
                     type="button"
@@ -93,6 +124,7 @@ export function RegisterForm() {
                     Continue with GitHub
                   </Button>
                   <Button
+                    onClick={signInGoogle}
                     variant="outline"
                     className="w-full"
                     type="button"
@@ -112,7 +144,7 @@ export function RegisterForm() {
                         <FormControl>
                           <Input
                             type="email"
-                            placeholder="email@exmaple.com"
+                            placeholder="m@example.com"
                             {...field}
                           />
                         </FormControl>
@@ -129,7 +161,7 @@ export function RegisterForm() {
                         <FormControl>
                           <Input
                             type="password"
-                            placeholder="********"
+                            placeholder="*********"
                             {...field}
                           />
                         </FormControl>
@@ -142,11 +174,11 @@ export function RegisterForm() {
                     name="confirmPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Confirm password</FormLabel>
+                        <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
                           <Input
                             type="password"
-                            placeholder="********"
+                            placeholder="*********"
                             {...field}
                           />
                         </FormControl>
@@ -171,4 +203,4 @@ export function RegisterForm() {
       </Card>
     </div>
   );
-}
+};

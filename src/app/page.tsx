@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import { toast } from "sonner";
 
-const Page = async () => {
+const Page = () => {
   
   const trpc = useTRPC();
   const { data } = useQuery(trpc.getWorkflows.queryOptions());

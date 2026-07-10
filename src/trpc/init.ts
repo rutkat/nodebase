@@ -27,12 +27,12 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
     headers: await headers(),
   });
 
-  // if (!session) {
-  //   throw new TRPCError({
-  //     code: "UNAUTHORIZED",
-  //     message: "Unathorized",
-  //   });
-  // }
+  if (!session) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Unathorized",
+    });
+  }
 
   return next({ ctx: { ...ctx, auth: session } });
 });

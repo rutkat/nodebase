@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/db";
 
-const Page = async () => {
+const Page = () => {
 
   return (
     <div className="min-h-screen

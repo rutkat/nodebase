@@ -2,7 +2,7 @@ import { requireAuth } from "@/lib/auth-utils";
 import { caller } from "@/trpc/server";
 import { LogoutButton } from "./logout";
 
-const Page = async () => {
+const Page = () => {
   await requireAuth();
   const data = await caller.getUsers();
 

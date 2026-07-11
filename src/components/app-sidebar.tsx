@@ -96,7 +96,7 @@ export const AppSidebar = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              tooltip="Upgade to Pro"
+              tooltip="Upgrade to Pro"
               className="gap-x-4 h-10 px-4"
               onClick={() => {}}
             >

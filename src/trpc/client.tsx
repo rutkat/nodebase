@@ -23,8 +23,9 @@ function getQueryClient() {
 }
 function getUrl() {
   const base = (() => {
-    if (typeof window !== 'undefined') return '';
-    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+    if (typeof window !== 'undefined') { 
+      return '';
+    }
     return 'http://localhost:3000';
   })();
   return `${base}/api/trpc`;
@@ -43,7 +44,6 @@ export function TRPCReactProvider(
     createTRPCClient<AppRouter>({
       links: [
         httpBatchLink({
-          // transformer: superjson, <-- if you use a data transformer
           url: getUrl(),
         }),
       ],

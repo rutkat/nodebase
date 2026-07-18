@@ -5,6 +5,9 @@ import prisma from "@/lib/db";
 import { polarClient } from "./polar";
 
 export const auth = betterAuth({
+  telemetry: {
+    enabled: false,
+  },
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),

@@ -7,16 +7,6 @@ export const prefetchWorkflows = (params: Input) => {
   return prefetch(trpc.workflows.getMany.queryOptions(params));
 };
 
-// import { getQueryClient } from "@/trpc/server";
-// import { TRPCQueryOptions } from "@trpc/tanstack-react-query";
-
-// export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
-//   queryOptions: T,
-// ) {
-//   const queryClient = getQueryClient();
-//   if (queryOptions.queryKey[1]?.type === 'infinite') {
-//     void queryClient.prefetchInfiniteQuery(queryOptions as any);
-//   } else {
-//     void queryClient.prefetchQuery(queryOptions);
-//   }
-// }
+export const prefetchWorkflow = (id: string) => {
+  return prefetch(trpc.workflows.getOne.queryOptions({ id }));
+};

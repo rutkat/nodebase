@@ -10,7 +10,7 @@ export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
    */
-  return { userId: 'user_123' };
+  return {};
 });
 // Avoid exporting the entire t-object
 // since it's not very descriptive.
@@ -39,6 +39,7 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
       message: "Unathorized",
     });
   }
+  console.log(" SESSION =", session);
   return next({ ctx: { ...ctx, auth: session } });
 });
 

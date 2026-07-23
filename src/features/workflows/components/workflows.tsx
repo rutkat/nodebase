@@ -102,7 +102,7 @@ export const WorkflowsContainer = ({
     <EntityContainer
       header={<WorkflowsHeader />}
       search={<WorkflowsSearch />}
-      pagination={<></>}
+      pagination={<WorkflowsPagination />}
     >
       {children}
     </EntityContainer>
@@ -110,11 +110,11 @@ export const WorkflowsContainer = ({
 };
 
 export const WorkflowsLoading = () => {
-  return <LoadingView message="Loading workflows..." />
+  return <LoadingView message="Loading workflows..." />;
 };
 
 export const WorkflowsError = () => {
-  return <ErrorView message="Error loading workflows..." />
+  return <ErrorView message="Error loading workflows..." />;
 };
 
 export const WorkflowsEmpty = () => {
@@ -124,11 +124,13 @@ export const WorkflowsEmpty = () => {
 
   const handleCreate = () => {
     createWorkflow.mutate(undefined, {
-      onError: (error) => {
-        handleError(error);
-      },
       onSuccess: (data) => {
+        console.log(' createWorkflow: ', data)
         router.push(`/workflows/${data.id}`);
+      },
+      onError: (error) => {
+        console.log(' createWorkflow error: ', error)
+        handleError(error);
       }
     });
   };

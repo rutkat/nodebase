@@ -1,5 +1,5 @@
 import { auth } from '@/lib/auth';
-import { polarClient } from '@polar-sh/better-auth';
+import { polarClient } from '@/lib/polar';
 import { initTRPC, TRPCError } from '@trpc/server';
 // import next from 'next';
 import { headers } from 'next/headers';
@@ -48,6 +48,7 @@ export const premiumProcedure = protectedProcedure.use(
     const customer = await polarClient.customers.getStateExternal({
       externalId: ctx.auth.user.id,
     });
+    console.log("Customer premiumProcedure in init.ts: ", customer);
 
     if (!customer.activeSubscriptions || customer.activeSubscriptions.length === 0) {
       throw new TRPCError({

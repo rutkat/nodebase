@@ -48,7 +48,6 @@ export const premiumProcedure = protectedProcedure.use(
     const customer = await polarClient.customers.getStateExternal({
       externalId: ctx.auth.user.id,
     });
-    console.log("Customer premiumProcedure in init.ts: ", customer);
 
     if (!customer.activeSubscriptions || customer.activeSubscriptions.length === 0) {
       throw new TRPCError({

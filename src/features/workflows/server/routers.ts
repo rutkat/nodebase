@@ -5,7 +5,6 @@ import { NodeType } from "@/generated/prisma";
 import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
 import z from "zod";
 import { PAGINATION } from "@/config/constants";
-import { type } from "os";
 
 export const workflowsRouter = createTRPCRouter({
   create: premiumProcedure.mutation(({ ctx }) => {
@@ -58,10 +57,10 @@ export const workflowsRouter = createTRPCRouter({
 
       const edges: Edge[] = workflow.connections.map((connection) => ({
         id: connection. id,
-        source: connection. fromNodeId,
-        target: connection. toNodeId,
-        sourceHandle: connection. fromOutput,
-        targetHandle: connection. tolnput,
+        source: connection.fromNodeId,
+        target: connection.toNodeId,
+        sourceHandle: connection.fromOutput,
+        targetHandle: connection.toInput,
       }));
       
       return {

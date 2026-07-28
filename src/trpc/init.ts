@@ -39,7 +39,7 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
       message: "Unathorized",
     });
   }
-  console.log(" SESSION =", session);
+  console.log(" SESSION =", session.session);
   return next({ ctx: { ...ctx, auth: session } });
 });
 

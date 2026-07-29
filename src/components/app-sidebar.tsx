@@ -52,7 +52,7 @@ export const AppSidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
-  // console.log('hasActiveSubscription:', hasActiveSubscription);
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>

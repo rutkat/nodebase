@@ -21,7 +21,7 @@ export const EditorSaveButton = ({ workflowId }: { workflowId: string }) => {
   const editor = useAtomValue(editorAtom);
   const saveWorkflow = useUpdateWorkflow(); 
   const handleSave = () => { 
-    console.log(editor);
+
     if (!editor) {
       return;
     }

@@ -1,61 +1,46 @@
-import prisma from "@/lib/db";
+import { NonRetriableError } from "inngest";
 import { inngest } from "./client";
-// import { createAnthropic } from '@ai-sdk/anthropic'; 
-import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
-import { createOpenAI } from "@ai-sdk/openai";
-import { generateText } from 'ai';
-import * as Sentry from "@sentry/nextjs";
+import prisma from "@/lib/db";
+import { topologicalSort } from "./utils";
+import { NodeType } from "@/generated/prisma";
+import { getExecutor } from "@/features/executions/lib/executor-registry";
 
-// const anthropic = createAnthropic();
-// const model = anthropic('anthropic/claude-haiku-4.5');
-const openai = createOpenAI();
-const lmstudio = createOpenAICompatible({
-  name: 'lmstudio',
-  baseURL: 'http://127.0.0.1:1234/v1',
-});
-const model = lmstudio('zai-org/glm-4.6v-flash');
-
-export const execute = inngest.createFunction(
-  { id: "execute-ai" },
-  { event: "execute/ai" },
+export const executeWorkflow = inngest.createFunction(
+  { id: "execute-workflow" },
+  { event: "workflows/execute.workflow" },
   async ({ event, step }) => {
-    // await step.sleep("pretend", "2s");
-    Sentry.logger.info("User triggered test log");
+    const workflowId = event.data.workflowId;
 
-    console.warn("Warn test in console.");
+    if (!workflowId) {
+      throw new NonRetriableError("Workflow ID is missing");
+    }
 
-    const { steps: anthropicSteps } = await step.ai.wrap(
-      "lmstudio-generate-text",
-      generateText, 
-      {
-        model: model,
-        system: "You are an assistant.",
-        prompt: "Why is the sky blue? Answer in 2 sentences.",
-        maxRetries: 1,
-        experimental_telemetry: {
-          isEnabled: true,
-          recordInputs: true,
-          recordOutputs: true,
+    const sortedNodes = await step.run("prepare-workflow", async () => {
+      const workflow = await prisma.workflow.findUniqueOrThrow({
+        where: { id: workflowId },
+        include: {
+          nodes: true,
+          connections: true,
         },
-      }
-    );
-    const { steps: openaiSteps } = await step.ai.wrap(
-      "openai-generate-text",
-      generateText,
-      {
-        model: openai("gpt-4"),
-        system: "You are a helpful assistant.",
-        prompt: "What is 2 + 2?",
-        experimental_telemetry: {
-          isEnabled: true,
-          recordInputs: true,
-          recordOutputs: true,
-        },
-      }
-    );
-    return {
-      openaiSteps,
-      anthropicSteps,
-    };
-  },
+      });
+
+      return topologicalSort(workflow.nodes, workflow.connections);
+    });
+
+    let context = event.data.initialData || {};
+    
+    for (const node of sortedNodes) {
+      const executor = getExecutor(node.type as NodeType);
+      context = await executor({
+        data: node.data as Record<string, unknown>,
+        nodeId: node.id,
+        context,
+        step,
+      });
+    }
+    return { 
+      workflowId,
+      result: context,
+     };
+  }
 );

@@ -125,11 +125,9 @@ export const WorkflowsEmpty = () => {
   const handleCreate = () => {
     createWorkflow.mutate(undefined, {
       onSuccess: (data) => {
-        console.log(' createWorkflow: ', data)
         router.push(`/workflows/${data.id}`);
       },
       onError: (error) => {
-        console.log(' createWorkflow error: ', error)
         handleError(error);
       }
     });

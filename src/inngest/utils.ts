@@ -39,5 +39,11 @@ export const topologicalSort = (
   }
   const nodeMap = new Map(nodes.map((n) => [n.id, n]));
 
-  return sortedNodeIds.map((id) => nodeMap.get(id)!).filter(Boolean);
+  return sortedNodeIds.map((id) => {
+    const node = nodeMap.get(id);
+    if (!node) {
+      throw new Error(`Node with ID ${id} not found input`);
+    }
+    return node;
+  });
 };

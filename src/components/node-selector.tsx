@@ -60,7 +60,6 @@ export function NodeSelector({
   
   const { setNodes, getNodes, screenToFlowPosition } = useReactFlow();
   const handleNodeSelect = useCallback((selection: NodeTypeOption) => {
-    // Check if trying to add a manual trigger when one already exists
     if (selection.type === NodeType.MANUAL_TRIGGER) {
       const nodes = getNodes();
       const hasManualTrigger = nodes.some(

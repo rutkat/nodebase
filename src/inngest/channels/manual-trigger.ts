@@ -8,4 +8,4 @@ export const manualTriggerChannel = channel(MANUAL_TRIGGER_CHANNEL_NAME)
       nodeld: string;
       status: "loading" | "success" | "error";
   }>(),
-};
+  );

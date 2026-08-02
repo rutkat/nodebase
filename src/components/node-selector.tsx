@@ -4,7 +4,6 @@ import { createId } from "@paralleldrive/cuid2";
 import { useReactFlow } from "@xyflow/react";
 import {
   GlobeIcon,
-  Icon,
   MousePointerIcon,
 } from "lucide-react";
 import { useCallback } from "react";
@@ -33,6 +32,12 @@ const triggerNodes: NodeTypeOption[] = [
     label: "Trigger manually",
     description: "Runs the flow upon clicking the button.",
     icon: MousePointerIcon,
+  },
+  {
+    type: NodeType.GOOGLE_FORM_TRIGGER,
+    label: "Google Form",
+    description: "Runs the flow upon google form submission.",
+    icon: "/logos/googleform.svg",
   },
 ];
 
@@ -121,7 +126,6 @@ export function NodeSelector({
         <div>
           {triggerNodes.map((nodeType) => {
             const Icon = nodeType.icon;
-
             return (
               <div
                 key={nodeType.type}

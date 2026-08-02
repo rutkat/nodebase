@@ -14,7 +14,7 @@ export const manualTriggerExecutor: NodeExecutor<ManualTriggerData> = async ({
 
   await publish(
     manualTriggerChannel().status({
-      nodeld,
+      nodeId,
       status: "Loading",
     }),
   );

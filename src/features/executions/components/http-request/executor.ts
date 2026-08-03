@@ -15,7 +15,7 @@ Handlebars.registerHelper("json", (context) => {
 });
 
 type HttpRequestData = {
-  variablaName: string;
+  variableName: string;
   endpoint: string;
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: string;
@@ -35,35 +35,37 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
     }),
   );
 
-  if (!data.endpoint) {
-    await publish(
-      httpRequestChannel().status({
-        nodeId,
-        status: "error"
-      }),
-    );
-    throw new NonRetriableError("HTTP Request node: No endpoint configured");
-  }
-  if (!data.variablaName) {
-    await publish(
-      httpRequestChannel().status({
-        nodeId,
-        status: "error"
-      }),
-    );
-    throw new NonRetriableError("Variable name not defined.");
-  }
-  if (!data.method) {
-    await publish(
-      httpRequestChannel().status({
-        nodeId,
-        status: "error"
-      }),
-    );
-    throw new NonRetriableError("Method not defined.");
-  }
   try {
     const result = await step.run("http-request", async () => {
+
+      if (!data.endpoint) {
+        await publish(
+          httpRequestChannel().status({
+            nodeId,
+            status: "error"
+          }),
+        );
+        throw new NonRetriableError("HTTP Request node: No endpoint configured");
+      }
+      if (!data.variableName) {
+        await publish(
+          httpRequestChannel().status({
+            nodeId,
+            status: "error"
+          }),
+        );
+        throw new NonRetriableError("Variable name not defined.");
+      }
+      if (!data.method) {
+        await publish(
+          httpRequestChannel().status({
+            nodeId,
+            status: "error"
+          }),
+        );
+        throw new NonRetriableError("Method not defined.");
+      }
+
       const endpoint = Handlebars.compile(data.endpoint)(context);
       console.log(' ENDPOINT: ', endpoint);
       const method = data.method;

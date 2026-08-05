@@ -1,4 +1,4 @@
-import { Realtime } from "@inngest/realtime";
+import type { Realtime } from "@inngest/realtime";
 import type { GetStepTools, Inngest } from "inngest";
 
 export type WorkflowContext = Record<string, unknown>;
@@ -14,5 +14,5 @@ export interface NodeExecutorParams<TData = Record<string, unknown>> {
 };
 
 export type NodeExecutor<TData = Record<string, unknown>> = (
-  params: NodeExecutorParams<TData>
-) => Promise<WorkflowContext>
+  params: NodeExecutorParams<TData>,
+) => Promise<WorkflowContext>;

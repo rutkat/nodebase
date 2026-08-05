@@ -52,14 +52,10 @@ export const anthropicExecutor: NodeExecutor<AnthropicData> = async ({
     throw new NonRetriableError("User prompt is missing");
   }
 
-  // TODO: Throw if credential is missing
-
   const systemPrompt = data.systemPrompt
     ? Handlebars.compile(data.systemPrompt)(context)
     : "You are a helpful assistant.";
   const userPrompt = Handlebars.compile(data.userPrompt)(context);
-
-  // TODO: Fetch credential that user selected
 
   const credentialValue = process.env.ANTHROPIC_API_KEY!;
 

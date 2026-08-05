@@ -4,7 +4,6 @@ import { googleFormTriggerChannel } from "@/inngest/channels/google-form-trigger
 type GoogleFormTriggerData = Record<string, unknown>;
 
 export const googleFormTriggerExecutor: NodeExecutor<GoogleFormTriggerData> = async ({
-  data,
   nodeId,
   context,
   step,

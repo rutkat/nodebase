@@ -28,7 +28,7 @@ export const executeWorkflow = inngest.createFunction(
       slackChannel(),
     ],
   },
-  async ({ event, step }) => {
+  async ({ event, step, publish }) => {
     const workflowId = event.data.workflowId;
 
     if (!workflowId) {
@@ -68,6 +68,7 @@ export const executeWorkflow = inngest.createFunction(
         userId,
         context,
         step,
+        publish,
       });
     }
     return { 

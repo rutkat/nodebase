@@ -21,6 +21,7 @@ type GeminiData = {
 export const geminiExecutor: NodeExecutor<GeminiData> = async ({
   data,
   nodeId,
+  userId,
   context,
   step,
   publish,
@@ -81,7 +82,7 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
     );
 
     const text = 
-      steps?[0].content?[0].type === "text" 
+      steps[0].content[0].type === "text" 
         ? steps[0].content[0].text
         : "";
     

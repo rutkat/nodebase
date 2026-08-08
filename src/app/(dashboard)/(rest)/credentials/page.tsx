@@ -2,7 +2,12 @@ import { requireAuth } from "@/lib/auth-utils";
 import { HydrateClient } from "@/trpc/server";
 import { SearchParams } from "nuqs";
 import { Suspense } from "react";
-import { CredentialsContainer, CredentialsList } from "@/features/credentials/components/credentials";
+import { 
+  CredentialsContainer, 
+  CredentialsError, 
+  CredentialsList, 
+  CredentialsLoading 
+} from "@/features/credentials/components/credentials";
 import { credentialsParamsLoader } from "@/features/credentials/server/params-loader";
 import { prefetchCredentials } from "@/features/credentials/server/prefetch";
 import { ErrorBoundary } from "react-error-boundary";
@@ -19,8 +24,8 @@ const Page = async ({ searchParams }: Props) => {
   return (
     <CredentialsContainer>
       <HydrateClient>
-        <ErrorBoundary fallback={'Error'}>
-          <Suspense fallback={'loading'}>
+        <ErrorBoundary fallback={<CredentialsError />}>
+          <Suspense fallback={<CredentialsLoading />}>
             <CredentialsList />
           </Suspense>
         </ErrorBoundary>

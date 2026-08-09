@@ -135,7 +135,7 @@ export const workflowsRouter = createTRPCRouter({
       }));
 
       const edges: Edge[] = workflow.connections.map((connection) => ({
-        id: connection. id,
+        id: connection.id,
         source: connection.fromNodeId,
         target: connection.toNodeId,
         sourceHandle: connection.fromOutput,

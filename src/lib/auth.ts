@@ -27,7 +27,7 @@ export const auth = betterAuth({
               slug: "nodebase-home",
             }
           ],
-          successUrl: process. env.POLAR_SUCCESS_URL,
+          successUrl: process.env.POLAR_SUCCESS_URL,
           authenticatedUsersOnly: true,
         }),
         portal()

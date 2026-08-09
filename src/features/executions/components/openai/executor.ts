@@ -1,8 +1,10 @@
 import Handlebars from "handlebars";
-import { NonRetriableError } from "inngest";
+import { NonRetriableError, openai } from "inngest";
 import { generateText } from "ai";
 import type { NodeExecutor } from "@/features/executions/types";
 import { openAiChannel } from "@/inngest/channels/openai";
+import { decrypt } from "@/lib/encryption";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 Handlebars.registerHelper("json", (context) => {
   const jsonString = JSON.stringify(context, null, 2);
@@ -56,10 +58,8 @@ export const openAiExecutor: NodeExecutor<OpenAiData> = async ({
     : "You are a helpful assistant.";
   const userPrompt = Handlebars.compile(data.userPrompt)(context);
 
-  const credentialValue = process.env.OPENAI_API_KEY!;
-
   const openai = createOpenAI({
-    apiKey: credentialValue,
+    apiKey: decrypt(credential.value),
   });
 
   try {

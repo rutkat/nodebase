@@ -4,6 +4,7 @@ import { generateText } from "ai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import type { NodeExecutor } from "@/features/executions/types";
 import { geminiChannel } from "@/inngest/channels/gemini";
+import { decrypt } from "@/lib/encryption";
 
 Handlebars.registerHelper("json", (context) => {
   const jsonString = JSON.stringify(context, null, 2);
@@ -56,13 +57,11 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
   const systemPrompt = data.systemPrompt
     ? Handlebars.compile(data.systemPrompt)(context)
     : "You are a helpful assistant.";
+    
   const userPrompt = Handlebars.compile(data.userPrompt)(context);
 
-
-  const credentialValue = process.env.GOOGLE_GENERATIVE_AI_API_KEY!;
-
   const google = createGoogleGenerativeAI({
-    apiKey: credentialValue,
+    apiKey: decrypt(credential.value),
   });
 
   try {

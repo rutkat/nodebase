@@ -73,7 +73,7 @@ export const BaseExecutionNode = memo((
             <BaseHandle
               id="source-1"
               type="source"
-              position-={Position.Right}
+              position={Position.Right}
             />
             </BaseNodeContent>
           </BaseNode>

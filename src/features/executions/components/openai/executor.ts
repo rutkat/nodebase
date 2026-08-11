@@ -1,10 +1,10 @@
 import Handlebars from "handlebars";
-import { NonRetriableError, openai } from "inngest";
+import { NonRetriableError } from "inngest";
 import { generateText } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
 import type { NodeExecutor } from "@/features/executions/types";
 import { openAiChannel } from "@/inngest/channels/openai";
-import { decrypt } from "@/lib/encryption";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import prisma from "@/lib/db";
 
 Handlebars.registerHelper("json", (context) => {
   const jsonString = JSON.stringify(context, null, 2);
@@ -15,6 +15,7 @@ Handlebars.registerHelper("json", (context) => {
 
 type OpenAiData = {
   variableName?: string;
+  credentialId?: string;
   systemPrompt?: string;
   userPrompt?: string;
 };
@@ -40,7 +41,17 @@ export const openAiExecutor: NodeExecutor<OpenAiData> = async ({
         status: "error",
       })
     );
-    throw new NonRetriableError("OpenAi node: Variable name is missing");
+    throw new NonRetriableError("Variable name is missing");
+  }
+
+  if (!data.credentialId) {
+    await publish(
+      openAiChannel().status({
+        nodeId,
+        status: "error",
+      }),
+    );
+    throw new NonRetriableError("Credential is required");
   }
 
   if (!data.userPrompt) {
@@ -50,7 +61,7 @@ export const openAiExecutor: NodeExecutor<OpenAiData> = async ({
         status: "error",
       })
     );
-    throw new NonRetriableError("OpenAi node: User prompt is missing");
+    throw new NonRetriableError("User prompt is missing");
   }
 
   const systemPrompt = data.systemPrompt
@@ -58,8 +69,20 @@ export const openAiExecutor: NodeExecutor<OpenAiData> = async ({
     : "You are a helpful assistant.";
   const userPrompt = Handlebars.compile(data.userPrompt)(context);
 
+  const credential = await step.run("get-credential", () => {
+    return prisma.credential.findUnique({
+      where: {
+        id: data.credentialId,
+      },
+    });
+  });
+
+  if (!credential) {
+    throw new NonRetriableError("Credential not found");
+  }
+
   const openai = createOpenAI({
-    apiKey: decrypt(credential.value),
+    apiKey: credential.value,
   });
 
   try {

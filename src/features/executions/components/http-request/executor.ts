@@ -15,9 +15,9 @@ Handlebars.registerHelper("json", (context) => {
 });
 
 type HttpRequestData = {
-  variableName: string;
-  endpoint: string;
-  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  variableName?: string;
+  endpoint?: string;
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: string;
 };
 
@@ -67,7 +67,7 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
       }
 
       const endpoint = Handlebars.compile(data.endpoint)(context);
-      console.log(' ENDPOINT: ', endpoint);
+
       const method = data.method;
 
       const options: KyOptions = { method };

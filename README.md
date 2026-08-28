@@ -29,25 +29,25 @@ Automation without the complexity. Build powerful workflows visually, connect th
 ## 🖥️ **Screenshots**
 ### User credentials for Ai platforms 
 
-<img width="50%" height="50%" src="screen-credentials.png" alt="User credentials for Ai platforms">
+<img width="75%" height="75%" src="screen-credentials.png" alt="User credentials for Ai platforms">
 
 ### Workflow canvas showing Stripe and Discord nodes
-<img width="50%" height="50%" src="screen-workflow-1.png" alt="Workflow canvas"/>
+<img width="75%" height="75%" src="screen-workflow-1.png" alt="Workflow canvas"/>
 
 
 ### Workflow canvas when execution is triggered
-<img width="50%" height="50%" src="screen-workflow-2.png" alt="Workflow execution" />
+<img width="75%" height="75%" src="screen-workflow-2.png" alt="Workflow execution" />
 
 ### User execution status page
-<img width="50%" height="50%" src="screen-execution.png" alt="User execution status" />
+<img width="75%" height="75%" src="screen-execution.png" alt="User execution status" />
 
 
 ### Inngest server dashboard showing completed execution
-<img width="50%" height="50%" src="screen-inngest.png" alt="Inngest server dashboard" />
+<img width="75%" height="75%" src="screen-inngest.png" alt="Inngest server dashboard" />
 
 
 ### User premium subscription payment page
-<img width="50%" height="50%" src="screen-payment.png" alt="User payment page" />
+<img width="75%" height="75%" src="screen-payment.png" alt="User payment page" />
 
 
 ## 🌲 **Project tree**
@@ -83,13 +83,13 @@ NextJS file-system based routing to map directory and file structures directly t
 **Installation issues** - Did you check module version compatibility in package.json?  
 └── Frequent updates to packages may break the entire applicaiton.
 
-**Vendor API issues** - API key not detected or accepted?
+**Vendor API issues** - API key not detected or accepted?  
 └── Ensure your registered the correct url with the vendor and placed your API key in the `.env` file.
 
-**Database issues** - Did you configure neon and prisma properly?
-└── Most features use prisma ORM so ensure the `generated` folder is up-to-date by running `npx prisma generate`. THe workflow executions use inngest so you will need to run `npm run inngest` located in package.json
+**Database issues** - Did you configure neon and prisma properly?  
+└── Most features use prisma ORM so ensure the `generated` folder is up-to-date by running `npx prisma generate`. The workflow executions use inngest so you will need to run `npm run inngest` located in package.json
 
-** User authentication issues** - Did you configure Better-Auth properly ?  
+**User authentication issues** - Did you configure Better-Auth properly?  
 
 
 ## 📫 Contact [@therutkat](https://x.com/therutkat)

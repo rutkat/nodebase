@@ -1,6 +1,6 @@
 # <img alt="logo" align="left" src="./public/logos/logo.svg" width="32px" />&nbsp; **Realtime Drag-n-Drop Workflow Editor**   
 
-### A complete SaaS product similar for workflow automation
+### A complete SaaS product for workflow automation
 
 ## 💻 **Software Features this project has**
 * Complete automation workflow editor

@@ -135,7 +135,7 @@ export function LoginForm() {
                         <FormControl>
                           <Input
                             type="email"
-                            placeholder="email@exmaple.com"
+                            placeholder="email@example.com"
                             {...field}
                           />
                         </FormControl>

@@ -11,10 +11,15 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL,
+  trustedOrigins: [process.env.BETTER_AUTH_URL!],
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
   },
+  // advanced: {
+  //   trustedProxyHeaders: true, 
+  // },
   socialProviders: {
     github: {
       clientId: process.env.GITHUB_CLIENT_ID as string,

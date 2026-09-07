@@ -31,7 +31,7 @@
     "@trpc/tanstack-react-query": "^11.18.0",
     "@xyflow/react": "^12.11.2",
     "ai": "^7.0.18",
-    "better-auth": "^1.6.23",
+    "better-auth": "^1.7.3",
     "class-variance-authority": "^0.7.1",
     "client-only": "^0.0.1",
     "clsx": "^2.1.1",

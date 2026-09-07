@@ -10,8 +10,11 @@ export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           className="flex items-center gap-2 self-center font-medium"
         >
           <Image src="/logos/logo.svg" alt="Nodebase" width={30} height={30} />
-          Nodebase
+          Nodebase 
         </Link>
+        <div className="auth-layout-head">
+          <h2>Drag-n-Drop Workflow Automation Editor</h2>
+        </div>
         {children}
       </div>
     </div>

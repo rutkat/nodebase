@@ -28,7 +28,7 @@ export const UpgradeModal = ({
           <AlertDialogTitle>Upgrade to Pro</AlertDialogTitle>
           <AlertDialogDescription>
             You need an active subscription to perform this action. Upgrade to
-            Pro to unlock all features.
+            Pro to unlock all features. (If in sandbox mode, use test credit card 4242 4242 4242 4242 with a future exp date.)
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -26,6 +26,9 @@
 ## 🖊️ **Description**
 Automation without the complexity. Build powerful workflows visually, connect the tools your business already uses, and let automation handle the repetitive work. This workflow editor gives engineers, CEOs, and founders a fast, intuitive way to turn manual processes into reliable, automated systems—without having to build and maintain every integration from scratch. The visual, drag-and-drop canvas makes workflows easy to understand, modify, and share, while still providing the flexibility technical teams expect from a serious automation platform.
 
+## 📼 **Video Walkthrough**
+[Watch a video](https://youtu.be/P00hqjyRfbY) of the codebase being explained.  
+
 ## 🖥️ **Screenshots**
 ### User credentials for Ai platforms 
 
